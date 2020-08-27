@@ -37,7 +37,7 @@ def read_config():
     script_directory = os.path.dirname(os.path.realpath(__file__))
     config_path = os.path.join(script_directory, 'config.ini')
     # config.read('config.ini')
-    config.readfp(open(config_path, 'r'))
+    config.read(config_path)
 
     API_KEY = config['OPENWEATHERMAP'].get('api_key')
 
