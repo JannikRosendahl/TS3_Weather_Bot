@@ -1,3 +1,4 @@
+import os
 import configparser as configparser
 import random
 from datetime import datetime
@@ -33,7 +34,10 @@ def read_config():
     global weather_channel_parent_identifier
 
     config = configparser.ConfigParser()
-    config.read('config.ini')
+    script_directory = os.path.dirname(os.path.realpath(__file__))
+    config_path = os.path.join(script_directory, 'config.ini')
+    # config.read('config.ini')
+    config.readfp(open(config_path, 'r'))
 
     API_KEY = config['OPENWEATHERMAP'].get('api_key')
 
