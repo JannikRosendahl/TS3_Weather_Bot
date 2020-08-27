@@ -69,6 +69,8 @@ def connect_to_teamspeak():
 
 
 def update_weather_channels():
+    dt_string = datetime.now().strftime("%d/%m/%Y %H:%M")
+    print(dt_string)
     channel_list = ts3connection.channellist()
     weather_parent_channel_ids = []
     successful_updates = 0
@@ -107,7 +109,6 @@ def update_weather_channels():
 
     # if we updated channels update parent channels with date/time
     if successful_updates > 0:
-        dt_string = datetime.now().strftime("%d/%m/%Y %H:%M")
         for channel_id in weather_parent_channel_ids:
             new_channel_name = '[cspacer]' + weather_channel_parent_identifier + '  ' + dt_string
             try:
