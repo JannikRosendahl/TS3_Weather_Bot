@@ -1,5 +1,6 @@
 import configparser as configparser
 import random
+from datetime import datetime
 
 from Weather import request_weather
 from ts3API.TS3Connection import TS3Connection
@@ -66,6 +67,7 @@ def connect_to_teamspeak():
 def update_weather_channels():
     channel_list = ts3connection.channellist()
     weather_parent_channel_ids = []
+    successful_updates = 0
 
     for channel in channel_list:
         channel_name = channel['channel_name']
@@ -93,11 +95,21 @@ def update_weather_channels():
                     print(f'updated channel {channel_id} for city {city_name}')
                     print(f'\told channel name: {channel_name}')
                     print(f'\tnew channel name: {new_channel_name}')
+                    successful_updates += 1
                 except:
                     print(f'error updating channel {channel_id} for city {city_name}')
             else:
                 print(f'did not update channel {channel_id} for city {city_name}, data has not changed')
 
+    # if we updated channels update parent channels with date/time
+    if successful_updates > 0:
+        dt_string = datetime.now().strftime("%d/%m/%Y %H:%M")
+        for channel_id in weather_parent_channel_ids:
+            new_channel_name = '[cspacer]' + weather_channel_parent_identifier + '  ' + dt_string
+            try:
+                ts3connection.channeledit(cid=channel_id, channel_name=new_channel_name)
+            except:
+                print('error updating weather channel parent name')
 
 
 read_config()
