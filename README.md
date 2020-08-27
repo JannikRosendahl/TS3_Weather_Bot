@@ -4,6 +4,8 @@ Depends on Murgyeye's [teamspeak3-python-api](https://github.com/Murgeye/teamspe
 Uses the [openweathermap-api](https://openweathermap.org/current) <br>
 Run as a cron job for automatic updates every x sec/min/hr.
 
+![alt text](https://raw.githubusercontent.com/JannikRosendahl/assets/master/TS3_Weather_Bot_Screenshot.PNG?token=AJENESPL5RK6DGWWB2QHDYC7KERKG)
+
 To mark a channel on your server as a 'weather'-channel, it has to be a sub-channel of a channel containing the [TEAMSPEAK][weather_channel_parent_identifier]
 specified in your config.ini. <br>
 A weather channel's name has be a location.
