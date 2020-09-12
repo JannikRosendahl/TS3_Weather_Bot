@@ -87,11 +87,11 @@ def update_weather_channels():
         # check if we are a weather channel
         if weather_parent_channel_ids.count(channel_pid) > 0:
             # request weather data
-            city_name = channel_name.split(' ')[0]
+            city_name = channel_name.split(':')[0]
             weather = request_weather(API_KEY, city_name)
 
             # build new channel name, truncate string to len=40 (teamspeak hardcoded max channel length)
-            new_channel_name = f'{city_name} {weather.weather}, {weather.temp}°C, {weather.wind_speed}km/h'
+            new_channel_name = f'{city_name}: {weather.weather}, {weather.temp}°C, {weather.wind_speed}km/h'
             new_channel_name = new_channel_name[:40]
 
             # check if we have to update channel name
