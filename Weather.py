@@ -1,8 +1,10 @@
 import requests
+from datetime import datetime
 
 
 def request_weather(api_key, location):
-    url = "https://api.openweathermap.org/data/2.5/weather?q={}&units=metric&appid={}&lang={}".format(location, api_key, 'DE')
+    url = "https://api.openweathermap.org/data/2.5/weather?q={}&units=metric&appid={}&lang={}".format(location, api_key,
+                                                                                                      'DE')
     weather_json = requests.get(url).json()
 
     # check if response failed, exit at failure
@@ -13,6 +15,34 @@ def request_weather(api_key, location):
     weather = Weather(weather_json)
     return weather
 
+
+def get_wind_direction(degree):
+    if degree < 0:
+        return 'bullshit'
+    elif degree <= 22.5:
+        return 'north'
+    elif degree <= 67.5:
+        return 'north east'
+    elif degree <= 112.5:
+        return 'east'
+    elif degree <= 157.5:
+        return 'south east'
+    elif degree <= 202.5:
+        return 'south'
+    elif degree <= 247.5:
+        return 'south west'
+    elif degree <= 292.5:
+        return 'west'
+    elif degree <= 337.5:
+        return 'north west'
+    else:
+        return 'north'
+
+def get_timezone(seconds_from_utc):
+    hours = int(seconds_from_utc / 60 / 60 - 1)
+    sign = '+' if hours > 0 else ''
+
+    return f'{sign}{hours} hours'
 
 class Weather:
     country = None
@@ -81,4 +111,15 @@ class Weather:
         print('wind_speed:', self.wind_speed)
         print('wind_deg:', self.wind_deg)
 
+    def get_description(self):
+        return f"""timezone: {get_timezone(self.timezone)}
+weather_desc: {self.weather_desc}
+minimal_temperatur: {self.temp_min}°C
+maximal_temperatur: {self.temp_max}°C
+humidity: {self.humidity}%
+wind_speed: {self.wind_speed} km/h
+wind_dir: {get_wind_direction(self.wind_deg)}
 
+sunrise: {datetime.utcfromtimestamp(int(self.sunrise)).strftime('%H:%M:%S')}
+sunset: {datetime.utcfromtimestamp(int(self.sunset)).strftime('%H:%M:%S')}
+"""

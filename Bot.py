@@ -105,7 +105,14 @@ def update_weather_channels():
                 except:
                     print(f'error updating channel {channel_id} for city {city_name}')
             else:
-                print(f'did not update channel {channel_id} for city {city_name}, data has not changed')
+                print(f'did not update channel_name {channel_id} for city {city_name}, data has not changed')
+
+            # try to update channel description
+            weather.print()
+            try:
+                ts3connection.channeledit(cid=channel_id, channel_description=weather.get_description())
+            except:
+                print(f'error updating channel_description {channel_id} for city {city_name}')
 
     # if we updated channels update parent channels with date/time
     if successful_updates > 0:
