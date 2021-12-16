@@ -8,7 +8,7 @@ Run as a cron job for automatic updates every x sec/min/hr.
 
 To mark a channel on your server as a 'weather'-channel, it has to be a sub-channel of a channel containing the [TEAMSPEAK][weather_channel_parent_identifier]
 specified in your config.ini. <br>
-A weather channel's name has be a location.
+A weather channel's name has to be a location.
 
 **config.ini:** <br>
 `api_key`: you must provide a valid api key, get a free one [here](https://openweathermap.org/price)<br>
